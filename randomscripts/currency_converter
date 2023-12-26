@@ -1,0 +1,37 @@
+import requests
+
+API_KEY='GET Your value'
+BASE_URL=f'https://api.freecurrencyapi.com/v1/latest?apikey={API_KEY}'
+
+CURRENCIES= ['USD','CAD','EUR','AUD','INR']
+
+def convert_currency(base):
+    currencies=",".join(CURRENCIES)
+    url=f"{BASE_URL}&base_currency={base}&currencies={currencies}"
+    try:
+        response=requests.get(url)
+        data=response.json()
+        print(data)
+        return data["data"]
+    except Exception as e:
+        print(e)
+        return None
+
+while True:
+    print("===currency converter====")
+    val=input("Please Q/q to quit or any key to continue").lower()
+    if val =="q":
+        break
+    base=input("the currency you have:").upper()
+    if base not in CURRENCIES:
+        print("Invalid input : Accepted Currency are USD ,CAD,EUR,AUD and INR")
+    desired=input("the currency whose value you want??:").upper()     
+    if desired not in CURRENCIES:
+        print("Invalid input : Accepted Currency are USD ,CAD,EUR,AUD and INR")
+    data =convert_currency(base)
+    print('data')
+    for key,value in data.items():
+        print(f"{key}:{value}")
+
+
+
